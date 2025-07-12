@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Generator Formułki</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input, textarea, button {
+            font-size: 16px;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 80px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Generator Formułki Sprawdzania</h1>
+
+        <label for="nick">Nick gracza:</label>
+        <input type="text" id="nick" placeholder="Wpisz nick gracza">
+
+        <button onclick="generujFormulke()">Generuj</button>
+
+        <label for="formulka">Wygenerowana formułka:</label>
+        <textarea id="formulka" readonly></textarea>
+
+        <button onclick="kopiuj()">Kopiuj</button>
+    </div>
+
+    <script>
+        function generujFormulke() {
+            const nick = document.getElementById("nick").value.trim();
+            if (!nick) {
+                alert("Wpisz nick gracza!");
+                return;
+            }
+
+            const teraz = new Date();
+            teraz.setMinutes(teraz.getMinutes() + 5); // Dodaj 5 minut
+
+            const godzina = teraz.getHours().toString().padStart(2, '0');
+            const minuty = teraz.getMinutes().toString().padStart(2, '0');
+            const czas = `${godzina}:${minuty}`;
+
+            const formulka = `${nick} >> Jesteś sprawdzany! Podaj anydeska na /helpop! Masz czas do ${czas}`;
+            document.getElementById("formulka").value = formulka;
+        }
+
+        function kopiuj() {
+            const tekst = document.getElementById("formulka");
+            tekst.select();
+            tekst.setSelectionRange(0, 99999); // Dla urządzeń mobilnych
+            document.execCommand("copy");
+            alert("Formułka została skopiowana!");
+        }
+    </script>
+</body>
+</html>
